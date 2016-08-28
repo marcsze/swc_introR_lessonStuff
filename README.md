@@ -1,7 +1,11 @@
 # Intro to R Lesson Plan
-### Originally designed for a SWC session from August 31st - September 1st
+## Originally designed for a SWC session from August 31st - September 1st
+
+### Preamble
 
 This repository contains all the material needed as well as a description and walkthrough of all the different topics that will be covered during the session.
+
+### Obtaining Example Data Set
 
 The inflammation data set that will be used during this lesson can be downloaded [here](http://swcarpentry.github.io/r-novice-inflammation/setup/).  After downloading the data move it onto your Desktop and unzip the file.  
 
