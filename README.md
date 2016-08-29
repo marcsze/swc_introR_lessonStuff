@@ -30,7 +30,12 @@ print("Hello World")
 Alternatively, we can also run commands using a script.  To open a new script file in RStudio select the `File` tab and then hover over the `New File` and then select `R Script`.  This will open a fourth panel.  We can then write our commands in the script file and then have it run via the console.  There are a few different ways in which we can run commands from the script file.
 
 1. ![Using the run button to execute a command in the script file](RRunPic2.png) Use the run button to execute command on the same line as the cursor
+
 2. ![Using the run button to execute a command in the script file](RRunPic3.png) Use the source button to run the command (this will run all commands in your script)
+
+3. You can use `ctrl` + `enter` to run the command on the line of the cursor as well.
+
+4. You can also quickly source all of your code with `ctrl` + `shift` + `s` 
 
 
 
