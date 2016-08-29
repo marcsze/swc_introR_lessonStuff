@@ -186,6 +186,7 @@ dat2[whichPatients, whichDays] <- dat2[whichPatients, whichDays]/2
 * Go over plotting only the `min()` day inflammation (ask class how they would do this)
 
 Questions
+<br>
 How would you plot the SD for the inflammation data for each day across all patients
 `plot(apply(dat, 2, sd))`
 
