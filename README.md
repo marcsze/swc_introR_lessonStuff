@@ -139,7 +139,8 @@ Doing some calculations
 
 ```R
 # get average by row
-avg_patient_inflammation <- apply(data, 1, mean)
+avg_patient_inflammation <- apply(dat, 1, mean)
+avg_day_inflammation <- apply(dat, 2, mean)
 ```
 
 Finally, explain how R is filled with functions that have more efficient alternatives e.g. `colMeans` and `rowMeans`.
@@ -178,6 +179,16 @@ dat2[whichPatients, whichDays] <- dat2[whichPatients, whichDays]/2
   * Are there any alternative methods the class can think of?
 
 
+#### Plotting
+
+* Go over base `plot()` function with `avg_day_inflammation` 
+* Go over plotting only the `max()` day inflammation 
+* Go over plotting only the `min()` day inflammation (ask class how they would do this)
+
+Questions
+How would you plot the SD for the inflammation data for each day across all patients
+`plot(apply(dat, 2, sd))`
 
 
+### Creating Functions
 
