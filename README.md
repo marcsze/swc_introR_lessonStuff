@@ -191,3 +191,73 @@ Questions
 
 ### Creating Functions
 
+#### Defining a Function
+
+Now we are going to learn how to create a function.  Some functions that we have already use include `apply`, `sd`, `mean`, etc.   We are going to create fahrenheit to kelvin conversion function.
+
+```R
+fahr_to_kelvin <- function(temp){
+  kelvin <- ((temp - 32) * (5 / 9)) + 273.15
+  return(kelvin)
+}
+```
+* Demonstrate a few examples
+* Mention that R has an automatic reutrn but we will specify the return for our lesson for clarity
+* Try examples without the return
+
+#### Composing Functions
+
+* Get class to create a kelvin to celsius function
+
+*Solution*
+```R
+kelvin_to_celsius <- function(temp){
+  celsius <- temp - 273.15
+  return(celsius)
+}
+```
+* Try this new function on 0 should return -273.15 if it works properly.
+* Show how to create fahrenheit to celsius conversion using the two functions already made
+
+```R
+fahr_to_celsius <- function(temp){
+  temp_k <- fahr_to_kelvin(temp)
+  result <- kelvin_to_celsius(temp_k)
+  return(result)
+}
+```
+* Try this on a fahrenheit reading of 32 the result should return 0 if working properly.
+* Can also achieve this result without creating a new function by nesting/chaining functions
+  * `kelvin_to_celsius(fahr_to_kelvin(32.0))`
+
+Question
+* Create a wrapper function that puts a variable at the beginning and end of vector
+    * we want a vector with `*` at the beginning and the end of an inputed vector
+    * `vec1 <- c("write", "programs", "for", "people", "not", "computers")`
+    * `wrapperVar <- "*"`
+
+*Solution*
+```R
+fence <- function(vec1, wrapperVar){
+  newVector <- c(wrapperVar, vec1, wrapperVar)
+  return(newVector)
+}
+```
+* Create a fucntion that obtains the first and last component in a vector (hint `length()`)
+
+*Solution*
+```R
+outside <- function(data){
+  newData <- c(data[1], data[length(data)])
+  return(newData)
+}
+```
+
+#### Testing and Documenting
+
+
+
+
+
+
+
