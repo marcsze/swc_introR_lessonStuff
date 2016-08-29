@@ -52,6 +52,22 @@ print("Hello World"
 Try it out.  You should see a `+` sign appear.  R is smart enough to know that you are missing something in your code and is waiting for you to add it.  Cool right?  You can escape the `+` sign by pressing `Esc`.  Now that we've gotten a good feel for the RStudio program lets get started with some commands now...
 
 
+### Analyzing Patient Data
+
+I'm going to use the script panel for most of the rest of the lesson (need to make sure to enlarge the view with `ctrl` + `shift` + `+`).
+
+Main parts covered during this component include:
+* Loading Data
+* Variable assignment
+    * can use `Alt` + `-` to quickly bring up arrow used for assignment
+*  Commenting examples
+*  Basic data manipulation
+*  How to bring up help for each function
+*  Basic apply usage
+    * alternative include `rowMeans` and `colMeans`
+* Basic Plotting
+
+
 
 
 
