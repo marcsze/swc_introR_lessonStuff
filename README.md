@@ -334,7 +334,150 @@ rescale_0_to_1 <- function(v, lower = 0, upper = 1) {
 }
 ```
 
+### Analyzing Multiple Data Sets
 
+#### Preamble
+
+The main objective of this lesson will be the introduction of for loops in R.
+
+Remind the class of the previous funtion called `analyze()` that creates a graph for the minimum, average, and maximum inflammation by day.
+
+```R
+analyze <- function(filename) {
+  # Plots the average, min, and max inflammation over time.
+  # Input is character string of a csv file.
+  dat <- read.csv(file = filename, header = FALSE)
+  avg_day_inflammation <- apply(dat, 2, mean)
+  plot(avg_day_inflammation)
+  max_day_inflammation <- apply(dat, 2, max)
+  plot(max_day_inflammation)
+  min_day_inflammation <- apply(dat, 2, min)
+  plot(min_day_inflammation)
+}
+
+analyze("data/inflammation-01.csv")
+```
+
+Can use this on other similarily formatted data sets (e.g. "inflammation-02.csv").  So this is okay with a couple but can get really burdensome if you have many similar data sets in which you want to analyze.
+
+#### For Loops
+
+* Let's take the given function:
+
+```R
+best_practice <- c("Let", "the", "computer", "do", "the", "work")
+print_words <- function(sentence){
+	print(sentence[1])
+	print(sentence[2])
+	print(sentence[3])
+	print(sentence[4])
+	print(sentence[5])
+	print(sentence[6])
+}
+```
+
+* Ask the class what might be some of the limitations of this sort of approach?
+	* Doesn't scale well
+	* It will only print the first 6 even of longer vectors
+
+* Good alternative is to use a for loop
+
+```R
+print_words <- function(sentence){
+	for(word in sentence){
+		print(word)
+	}
+}
+```
+* Talk about the general format of the for loop in R
+
+* Look through the next example and explain what R is doing
+```R
+len <- 0
+vowels <- c("a", "e", "i", "o", "u")
+for(v in vowels){
+	len <- len + 1
+}
+len
+```
+* Ask the class if they can remember an alternative way of doing this (use `length`)
+* Change `len <- len + 1` to `print(v)` to highlight how the loop ends up on the last character
+
+Questions
+
+* Using `seq()`, write a function that prints the first N natural numbers, one per line
+
+*Solution*
+```R
+print_N <- function(N) {
+  nseq <- seq(N)
+  for (num in nseq) {
+    print(num)
+  }
+}
+```
+
+* Create a function that adds a each number in a vector together (do not use `sum()`)
+
+* One Possible Solution*
+```R
+total <- function(vec) {
+  #calculates the sum of the values in a vector
+  vec_sum <- 0
+  for (num in vec) {
+    vec_sum <- vec_sum + num
+  }
+  return(vec_sum)
+}
+```
+
+* There is a built in exponent function in R (`2^4`).  Create one yourself.
+
+*One Possible Solution*
+```R
+expo <- function(base, power) {
+  result <- 1
+  for (i in seq(power)) {
+    result <- result * base
+  }
+  return(result)
+}
+```
+
+#### Processing Multiple Files
+
+Now we almost have everything we need to complete our original task of graphing a large number of similar data tables.  The last thing we need is to take advantage of a built in R function called `list.files()`.
+
+* Show what `list.files()` does with `?list.files()`
+* Show two ways of running the search with either "csv" or "inflammation" as the pattern
+	* Quick plug on puttind different parts of the analysis into different directories
+*  Show what happens with the "full.names = TRUE" option in `list.files()`
+* Create a workflow that utilizes this and a for loop
+
+```R
+filenames <- list.files(path = "data", pattern = "inflammation.*csv", full.names = TRUE)
+filenames <- filenames[1:3]
+for (f in filenames) {
+  print(f)
+  analyze(f)
+}
+```
+
+Questions
+
+* Write a fucntion called "analyze_all" that takes a filename pattern as its sole argument and runs analyze for each file whose name matches the pattern.
+
+*Solution*
+```R
+analyze_all <- function(pattern) {
+  # Runs the function analyze for each file in the current working directory
+  # that contains the given pattern.
+  filenames <- list.files(path = "data", pattern = pattern, full.names = TRUE)
+  for (f in filenames) {
+    analyze(f)
+  }
+}
+```
 
 
 
