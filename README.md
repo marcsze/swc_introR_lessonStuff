@@ -22,4 +22,12 @@ When we open up RStudio there are three panels the immediately appear
 * Environment/History (where you can see the data you load)
 * Help/Directory/Vis
 
+You can run commands directly on the console like you would in the `bash` command line.
+
+```R
+print("Hello World")
+```
+
+
+
 
