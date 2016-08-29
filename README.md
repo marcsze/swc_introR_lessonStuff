@@ -110,8 +110,8 @@ Variable can be thought of as name for a value.  The neat thing is that it can b
         * can use the command `head` to view data in console (ask how you would bring up the data then bring up `head`)
 
 Create a `mass` and `age` variable and get class to explain what happens when the arguments
-* ```R mass <- mass * 2.0``` 
-* ```R age <- age - 20```
+* `mass <- mass * 2.0` 
+* `age <- age - 20`
 
 
 
