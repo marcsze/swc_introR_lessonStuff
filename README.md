@@ -32,6 +32,7 @@ Alternatively, we can also run commands using a script.  To open a new script fi
 1. ![Using the run button to execute a command in the script file](RRunPic2.png) Use the run button to execute command on the same line as the cursor
 
 2. ![Using the run button to execute a command in the script file](RRunPic3.png) Use the source button to run the command (this will run all commands in your script)
+  2. Add extra lines of code to show the difference between source and run  
 
 3. You can use `ctrl` + `enter` to run the command on the line of the cursor as well.
 
