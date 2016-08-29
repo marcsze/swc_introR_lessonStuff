@@ -114,6 +114,36 @@ Create a `mass` and `age` variable and get class to explain what happens when th
 * `age <- age - 20`
 
 
+#### Manipulating Data
+
+Basic data table parsing
+* Go over the `class` function (type of data table being used)
+* `dim` to get total rows and columns
+* how to get a specific value in a data table with row and column number
+    * Try a view differnt examples
+* How to bring up a specific range of rows and columns
+    * have them try to get a different range (e.g. rows 5-10 and columns 4-7)
+* show the use of `c()` to get non-continuous rows and columns from data table
+    * Get them to try commands without filling in the row or column e.g. `data[, 5]` 
+      * Ask them what they think will happen
+
+Doing some calculations
+* assign variable to a whole row
+* use the `max()` function to get the highest value
+    * Important to note that can use `as.numeric` and `class` to view how data is stored
+* show the same thing but without variable storage
+* use `min()`, `mean()`, `median()`, `sd()`
+  * mention that this is good for one at a time but really want to apply to all the data table
+* Re-Introduce the help function by using it on `apply()`
+* Use `apply()` to get values by row (1) or column(2)
+
+```R
+# get average by row
+avg_patient_inflammation <- apply(data, 1, mean)
+```
+
+Finally, explain how R is filled with functions that have more efficient alternatives e.g. `colMeans` and `rowMeans`.
+
 
 
 
