@@ -97,8 +97,19 @@ Variable can be thought of as name for a value.  The neat thing is that it can b
 
 * Cover assignment (kilogram weight)
 * Cover arithmetic (kg to pound with 2.2 multiplication)
+* If not already mentioned highlight utility of the `up` arrow
 
 #### Commenting examples
+
+* Go over how to use comments to make code easier to understand
+    * Change the kg weight variable to new number
+    * Add a new variable for weight in pounds
+    * Change the kg weight to highlight how variables store the info
+    * highlight use of parenthesis
+    * Use the `read.csv` function along with variable assignment to store data as `dat`
+        * can use the command `head` to view data in console (ask how you would bring up the data then bring up `head`)
+
+ 
 
 
 
