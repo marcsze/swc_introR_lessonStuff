@@ -84,8 +84,22 @@ We can then read a csv file using the following command:
 ```R
 read.csv(file = "data/inflammation-01.csv", header = FALSE)
 ```
-Need to go over the options for `read.csv` (header and other types of decimal formats)
-  * initial intro the the help functionality of R
+
+Segway class into two observations that happened from running this command.
+  * First bring up the Need to go over the options for `read.csv` (header and other types of decimal formats)
+      * initial intro to the the help functionality of R
+  * Second bring up that everything was read to the console (not very useful)
+
+  
+#### Variable assignment
+
+Variable can be thought of as name for a value.  The neat thing is that it can be stored for future use (assign a variable and then show that it will appear in the Environment pane).
+
+* Cover assignment (kilogram weight)
+* Cover arithmetic (kg to pound with 2.2 multiplication)
+
+#### Commenting examples
+
 
 
 
