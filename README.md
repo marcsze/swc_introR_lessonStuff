@@ -302,6 +302,40 @@ rescale_0_to_1 <- function(v) {
 }
 ```
 
+#### Defining Defaults
+
+* Demonstrate how we can pass arguments without specifying name (e.g. "file =" for `red.csv`)
+  * Stipulate that position matters if they are not named (use a demonstration)
+  * change the previous center function to include "desired = 0"
+  * create a new function to highlight how R does this in more detail
+    * use (), (55), (55,66), (55,66,77), (c=77)
+
+```R
+display <- function(a = 1, b = 2, c = 3) {
+  result <- c(a, b, c)
+  names(result) <- c("a", "b", "c")  # This names each element of the vector
+  return(result)
+}
+```
+
+* Go over the `read.csv` command using the `?read.csv` to see what is going on with defaults
+
+Question
+* Rewrite the `rescale_0_to_1` function so it scales between 0 -1 by default but will allow for the user to change these bounds.
+
+*One possible Solution*
+```R
+rescale_0_to_1 <- function(v, lower = 0, upper = 1) {
+  # Rescales a vector, v, to lie in the range lower to upper.
+  L <- min(v)
+  H <- max(v)
+  result <- (v - L) / (H - L) * (upper - lower) + lower
+  return(result)
+}
+```
+
+
+
 
 
 
