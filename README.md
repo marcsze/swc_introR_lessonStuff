@@ -144,7 +144,38 @@ avg_patient_inflammation <- apply(data, 1, mean)
 
 Finally, explain how R is filled with functions that have more efficient alternatives e.g. `colMeans` and `rowMeans`.
 
+Questions
+* Get class to create a variable called animal (go over how RStudio automatically completes quotes)
+```R
+animal <- c("m", "o", "n", "k", "e", "y")
+```
+    * remind about selecting specific parts of the vector 
+    * how to get reverse order (`animal[4:1]`)
+    * what does `animal[-1]` or `animal[-4]` do?
+    * spell new word "eon" (`animal[c(5,2,3)]`)
 
+* How would you get the max inflammation from patient 5 for days 3-7 (`max(dat[5, 3:7])`)
+
+* Using the inflammation data frame dat from above: Let’s pretend there was something wrong with the instrument on the first five days for every second patient (#2, 4, 6, etc.), which resulted in the measurements being twice as large as they should be
+  * Write a vector with each affected patient (hint use `seq(from, to, by)`)
+  * Create new data from in which you halve the 1st five values in only those patients
+  * print new data table to check
+  * Mention in solution how R is vectorized so it will do the division for all values
+
+*One possible solution*
+```R
+whichPatients <- seq(2, 40, 2)
+whichDays <- c(1:5)
+dat2 <- dat
+dat2[whichPatients, whichDays] <- dat2[whichPatients, whichDays]/2
+(dat2)
+```
+
+* Use the apply function to 
+  * get mean over 40 days for patient 1-5 (`apply(dat[1:5, ], 1, mean)`)
+  * mean for days 1 - 10 for all patients (`apply(dat[, 1:10], 2, mean)`)
+  * mean for every second day for all patients (`apply(dat[, seq(1,40,2)], 2, mean)`)
+  * Are there any alternative methods the class can think of?
 
 
 
