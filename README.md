@@ -7,7 +7,7 @@ This repository contains all the material needed as well as a description and wa
 
 ### Obtaining Example Data Set
 
-The inflammation data set that will be used during this lesson can be downloaded [here](http://swcarpentry.github.io/r-novice-inflammation/setup/).  After downloading the data move it onto your Desktop and unzip the file.  
+The inflammation data set that will be used during this lesson can be downloaded [here](http://swcarpentry.github.io/r-novice-inflammation/setup/).  After downloading the data create a new folder called `r-novice-inflammation`, unzip the file and move it into this newly created folder.  
 
 *Alternatively, if you have `git` already installed and have a user profile you can also clone this repo and get the data set and this walkthrough with the following commands on the command line.*
 
@@ -66,6 +66,26 @@ Main parts covered during this component include:
 *  Basic apply usage
     * alternative include `rowMeans` and `colMeans`
 * Basic Plotting
+
+#### Loading Data
+
+We can get an idea of our current working directory by typing in 
+
+```R
+getwd()
+```
+Since we downloaded and unzipped our file into a folder on the Desktop to make things easier on us this morning we will set the directory to which RStudio will initially be in with:
+
+```R
+setwd("~/Desktop/r-novice-inflammation/")
+```
+We can then read a csv file using the following command:
+
+```R
+read.csv(file = "data/inflammation-01.csv", header = FALSE)
+```
+Need to go over the options for `read.csv` (header and other types of decimal formats)
+  * initial intro the the help functionality of R
 
 
 
