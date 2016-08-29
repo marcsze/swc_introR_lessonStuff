@@ -45,6 +45,12 @@ A few extra short cuts that could be helpful for switching between the console a
 
 Another important thing that we can do in the script file that is not easy to do in the console is to comment our code using the `#` button.  This tells the computer to ignore everything on this line.
 
+What happens when you send incomplete code to the console to run?
+```R
+print("Hello World"
+```
+Try it out.  You should see a `+` sign appear.  R is smart enough to know that you are missing something in your code and is waiting for you to add it.  Cool right?  You can escape the `+` sign by pressing `Esc`.  Now that we've gotten a good feel for the RStudio program lets get started with some commands now...
+
 
 
 
