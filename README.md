@@ -15,4 +15,11 @@ The inflammation data set that will be used during this lesson can be downloaded
 <br>
 `git clone https://github.com/marcsze/swc_introR_lessonStuff.git`
 
+### Intro to RStudio
+
+When we open up RStudio there are three panels the immediately appear
+* The Console
+* Environment/History (where you can see the data you load)
+* Help/Directory/Vis
+
 
