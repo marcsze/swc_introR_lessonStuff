@@ -479,6 +479,230 @@ analyze_all <- function(pattern) {
 }
 ```
 
+### Making Choices
+
+#### Saving Plots to a File
+
+We have now built two important functions "analyze" and "analyze_all".  Now how do we take this and save as a `.pdf`? So that we can share our findings with collaborators, PIs.  A simple way of doing this would be to use
+
+```R
+pdf("inflammation-01.pdf")
+analyze("data/inflammation-01.csv")
+dev.off()
+```
+
+* Need to have `dev.off()` to close connections and avoid overwriting files 
+
+However, we may be able to make the analyze function have the option to save as a pdf based on a user specified input by using conditionals (if/else statements).
+
+#### Conditionals
+
+R uses conditional statements to allow for it to decide between different options.  How does this look?
+
+```R
+num <- 37
+if (num > 100) {
+  print("greater")
+} else {
+  print("not greater")
+}
+print("done")
+```
+
+* See if the class can figure out what is going on with the statement.
+* Cover how conditional statements don't need an `else{}` statement.
+
+```R
+num <- 53
+if (num > 100) {
+  print("num is greater than 100")
+}
+```
+
+* Mention how in this case R will simply do nothing if the condition is not met.
+* Show how we can use multiple statements together
+
+```R
+sign <- function(num) {
+  if (num > 0) {
+    return(1)
+  } else if (num == 0) {
+    return(0)
+  } else {
+    return(-1)
+  }
+}
+```
+
+* Try various different numbers to highlight the functions functionality
+* Go over other statements `>=`, `<=`, and `!=`
+* Go over `&`
+
+```R
+if (1 > 0 & -1 > 0) {
+    print("both parts are true")
+} else {
+  print("at least one part is not true")
+}
+```
+
+* Modify the above code
+	* Replace `&` with `|`
+	* Replace "both parts are true" with "at least one part is true"
+	* Replace "at least one part is true" with "neither part is true"
+
+
+Questions
+
+* Write a function plot_dist that plots a boxplot if the length of the vector is greater than a specified threshold and a stripchart otherwise. To do this you’ll use the R functions `boxplot()` and `stripchart()`.
+	* Can use `dat[, 10]` and `dat[1:5, 10]` to help test the function out.
+	* Need to use a threshold value of 10
+
+*Solution*
+```R
+plot_dist <- function(x, threshold) {
+  if (length(x) > threshold) {
+    boxplot(x)
+  } else {
+    stripchart(x)
+  }
+}
+```
+
+* One of your collaborators prefers to see the distributions of the larger vectors as a histogram instead of as a boxplot. In order to choose between a histogram and a boxplot we will edit the function plot_dist and add an additional argument use_boxplot. By default we will set use_boxplot to TRUE which will create a boxplot when the vector is longer than threshold. When use_boxplot is set to FALSE, plot_dist will instead plot a histogram for the larger vectors. As before, if the length of the vector is shorter than threshold, plot_dist will create a stripchart. A histogram is made with the `hist()` command in R
+	* Need to have an option for boxplot to be true or false if not below a threshold
+	* Can use the same vectors as the previous question to test your function
+
+*Solution*
+```R
+plot_dist <- function(x, threshold, use_boxplot = TRUE) {
+   if (length(x) > threshold & use_boxplot) {
+       boxplot(x)
+   } else if (length(x) > threshold & !use_boxplot) {
+       hist(x)
+   } else {
+       stripchart(x)
+   }
+}
+```
+
+* Find the file containing the patient with the highest average inflammation score. Print the file name, the patient number (row number) and the value of the maximum average inflammation score.
+	* Use variables to store the maximum average and update it as you go through files and patients.
+	* Use variables to store the maximum average and update it as you go through files and patients.
+
+Add your code:
+```R
+filenames <- list.files(path = "data", pattern = "inflammation.*csv", full.names = TRUE)
+filename_max <- "" # filename where the maximum average inflammation patient is found
+patient_max <- 0 # index (row number) for this patient in this file
+average_inf_max <- 0 # value of the average inflammation score for this patient
+for (f in filenames) {
+  dat <- read.csv(file = f, header = FALSE)
+  dat.means = apply(dat, 1, mean)
+  for (patient_index in length(dat.means)){
+    patient_average_inf = dat.means[patient_index]
+    # Add your code here ...
+  }
+}
+print(filename_max)
+print(patient_max)
+print(average_inf_max)
+```
+
+*Solution*
+```R
+# Add your code here ...
+if (patient_average_inf > average_inf_max) {
+  average_inf_max = patient_average_inf
+  filename_max <- f
+  patient_max <- patient_index
+}
+```
+
+#### Saving Automatically Generated Figures
+
+Now we can update the analyze function so we can control which figures are made into a `.pdf`.
+
+```R
+analyze <- function(filename, output = NULL) {
+  # Plots the average, min, and max inflammation over time.
+  # Input:
+  #    filename: character string of a csv file
+  #    output: character string of pdf file for saving
+  if (!is.null(output)) {
+    pdf(output)
+  }
+  dat <- read.csv(file = filename, header = FALSE)
+  avg_day_inflammation <- apply(dat, 2, mean)
+  plot(avg_day_inflammation)
+  max_day_inflammation <- apply(dat, 2, max)
+  plot(max_day_inflammation)
+  min_day_inflammation <- apply(dat, 2, min)
+  plot(min_day_inflammation)
+  if (!is.null(output)) {
+    dev.off()
+  }
+}
+```
+
+* Demonstrate how the `is.null()` function works by looking at `output <- NULL` with it
+* Demonstrate the different options with output
+	* Null
+	* "inflammation-01.pdf"
+* Remind class of best practices of saving results in a different directory
+	* use `dir.create("results")` to make a results directory
+* Now re-run `analyze()` but route output to the results directory
+* Use the `sub()` and 'file.path()` command and a modification of the `analyze_all()` function to create pdfs of all data
+
+```R
+f <- "inflammation-01.csv"
+sub("csv", "pdf", f)
+file.path("results", sub("csv", "pdf", f))
+
+analyze_all <- function(pattern) {
+  # Directory name containing the data
+  data_dir <- "data"
+  # Directory name for results
+  results_dir <- "results"
+  # Runs the function analyze for each file in the current working directory
+  # that contains the given pattern.
+  filenames <- list.files(path = data_dir, pattern = pattern)
+  for (f in filenames) {
+    pdf_name <- file.path(results_dir, sub("csv", "pdf", f))
+    analyze(file.path(data_dir, f), output = pdf_name)
+  }
+}
+
+analyze_all("inflammation*.csv")
+```
+
+Questions
+
+* One of your collaborators asks if you can recreate the figures with lines instead of points. Find the relevant argument to plot by reading the documentation (?plot), update analyze, and then recreate all the figures with analyze_all.
+
+
+*Solution*
+```R
+analyze <- function(filename, output = NULL) {
+  # Plots the average, min, and max inflammation over time.
+  # Input:
+  #    filename: character string of a csv file
+  #    output: character string of pdf file for saving
+  if (!is.null(output)) {
+    pdf(output)
+  }
+  dat <- read.csv(file = filename, header = FALSE)
+  avg_day_inflammation <- apply(dat, 2, mean)
+  plot(avg_day_inflammation, type = "l")
+  max_day_inflammation <- apply(dat, 2, max)
+  plot(max_day_inflammation, type = "l")
+  min_day_inflammation <- apply(dat, 2, min)
+  plot(min_day_inflammation, type = "l")
+  if (!is.null(output)) {
+    dev.off()
+  }
+}
+```
 
 
 
