@@ -39,6 +39,13 @@ Alternatively, we can also run commands using a script.  To open a new script fi
 4. You can also quickly source all of your code with `ctrl` + `shift` + `s` 
 
 
+A few extra short cuts that could be helpful for switching between the console and script windows
+* `ctrl` + `1` will move you from the console to the script
+* `ctrl` + `2` will move you from the script to the console
+
+Another important thing that we can do in the script file that is not easy to do in the console is to comment our code using the `#` button.  This tells the computer to ignore everything on this line.
+
+
 
 
 
