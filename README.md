@@ -255,7 +255,52 @@ outside <- function(data){
 
 #### Testing and Documenting
 
+First create a function called center (get class to explain what the function is doing)
 
+```R
+center <- function(data, desired){
+  new_data <- (data - mean(data)) + desired
+  return(new_data)
+}
+```
+
+* First try this on a vector of all zeros `z <- c(0,0,0,0)` and move everything to 3
+* Try this on the inflammation data set for day 4
+* compare `min`, `mean`, `max` between original and new centered data
+* Can compare `sd` of both to make sure the data structure didn't change
+* can check for difference by subtraction (`sd(dat[,4]) - sd(centered)`)
+* can also use `all.equal` on the standard deviations to check similarity of the two data sets
+* add documentation to function (get class to think about what they would put in the documentation)
+
+Questions
+* create a function that uses the inflammation data and plots the mean, max, and min for each day
+
+*Solution*
+```R
+analyze <- function(filename) {
+  # Plots the average, min, and max inflammation over time.
+  # Input is character string of a csv file.
+  dat <- read.csv(file = filename, header = FALSE)
+  avg_day_inflammation <- apply(dat, 2, mean)
+  plot(avg_day_inflammation)
+  max_day_inflammation <- apply(dat, 2, max)
+  plot(max_day_inflammation)
+  min_day_inflammation <- apply(dat, 2, min)
+  plot(min_day_inflammation)
+}
+```
+* Create a function that rescales your data to be between 0 and 1 (Use comments to document where you are)
+
+*Solution*
+```R
+rescale_0_to_1 <- function(v) {
+  # Rescales a vector, v, to lie in the range 0 to 1.
+  L <- min(v)
+  H <- max(v)
+  result <- (v - L) / (H - L)
+  return(result)
+}
+```
 
 
 
