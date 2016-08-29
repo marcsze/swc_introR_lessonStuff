@@ -27,6 +27,8 @@ You can run commands directly on the console like you would in the `bash` comman
 ```R
 print("Hello World")
 ```
+Alternatively, we can also run commands using a script.  To open a new script file in RStudio select the `File` tab and then hover over the `New File` and then select `R Script`.  This will open a fourth panel.  We can then write our commands in the script file and then have it run via the console.  
+
 
 
 
