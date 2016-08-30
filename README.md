@@ -105,13 +105,16 @@ Variable can be thought of as name for a value.  The neat thing is that it can b
     * Change the kg weight variable to new number
     * Add a new variable for weight in pounds
     * Change the kg weight to highlight how variables store the info
-    * highlight use of parenthesis
-    * Use the `read.csv` function along with variable assignment to store data as `dat`
-        * can use the command `head` to view data in console (ask how you would bring up the data then bring up `head`)
+    * highlight use of parenthesis 
 
-Create a `mass` and `age` variable and get class to explain what happens when the arguments
-* `mass <- mass * 2.0` 
-* `age <- age - 20`
+* Create a `mass` and `age` variable and get class to explain what happens when the arguments
+	* `mass <- mass * 2.0` 
+	* `age <- age - 20` 
+
+* Use the `read.csv` function along with variable assignment to store data as `dat`
+	* can use the command `head` to view data in console (ask how you would bring up the data then bring up `head`)
+
+
 
 
 #### Manipulating Data
