@@ -74,10 +74,10 @@ We can get an idea of our current working directory by typing in
 ```R
 getwd()
 ```
-Since we downloaded and unzipped our file into a folder on the Desktop to make things easier on us this morning we will set the directory to which RStudio will initially be in with:
+Since we downloaded and unzipped our file into a folder on the Desktop to make things easier on us this morning we will first all create a new Rproj folder so that our paths are all the same (show them how).  Then from here we will set the directory to which we want everything to be running and outputting in with:
 
 ```R
-setwd("~/Desktop/r-novice-inflammation/")
+setwd("r-novice-inflammation/")
 ```
 We can then read a csv file using the following command:
 
