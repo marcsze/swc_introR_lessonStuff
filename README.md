@@ -150,14 +150,15 @@ Finally, explain how R is filled with functions that have more efficient alterna
 
 Questions
 * Get class to create a variable called animal (go over how RStudio automatically completes quotes)
-```R
-animal <- c("m", "o", "n", "k", "e", "y")
-```
     * remind about selecting specific parts of the vector 
     * how to get reverse order (`animal[4:1]`)
     * what does `animal[-1]` or `animal[-4]` do?
     * spell new word "eon" (`animal[c(5,2,3)]`)
 
+```R
+animal <- c("m", "o", "n", "k", "e", "y")
+```
+   
 * How would you get the max inflammation from patient 5 for days 3-7 (`max(dat[5, 3:7])`)
 
 * Using the inflammation data frame dat from above: Let’s pretend there was something wrong with the instrument on the first five days for every second patient (#2, 4, 6, etc.), which resulted in the measurements being twice as large as they should be
