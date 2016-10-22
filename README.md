@@ -107,14 +107,35 @@ Variable can be thought of as name for a value.  The neat thing is that it can b
     * Change the kg weight to highlight how variables store the info
     * highlight use of parenthesis 
 
+#### Variables, Vectors, and Plotting
+
 * Create a `mass` and `age` variable and get class to explain what happens when the arguments
 	* `mass <- mass * 2.0` 
 	* `age <- age - 20` 
 
+* Introduce the c() function to combine multiple numbers together to create a vector
+	* `my_vector <- c(1,2,3,4,5,6,7)`
+	* go over `logical`, `vector`, `character`, `numeric`
+	* go over adding merging two vectors e.g. `second_vector <- c(25, my_vector)` 
+	* go over merging different types of vectors e.g. `test_vector <- c(TRUE, second_vector)`
+	* go over `factor()`
+		* numbers underneath the hood 
+		* look and behave lack characters (due to label) but are really integers
+		* become important for plotting
+	* ordered factors
+		* `food <- factor(c("low", "high", "medium", "high", "low", "medium", "high"))` then `levels(food)`
+		* 'food <- factor(food, levels = c("low", "medium", "high"))
+		* `levels(food)` then `min(food)`
+		* `food <- factor(food, levels = c("low", "medium", "high"), ordered = TRUE)` then `levels(food)`
+		* now `min(food)` should work!
+		
+* Converting Factors
+	* `f <- factor(c(3.4, 1.2, 5))` then `as.numeric(f)`
+		* Ask what is going on here
+	* `levels(f)[f]` then `f <- as.numeric(levels(f)[f])`
+			
 * Use the `read.csv` function along with variable assignment to store data as `dat`
 	* can use the command `head` to view data in console (ask how you would bring up the data then bring up `head`)
-
-
 
 
 #### Manipulating Data
@@ -182,15 +203,29 @@ dat2[whichPatients, whichDays] <- dat2[whichPatients, whichDays]/2
   * mean for every second day for all patients (`apply(dat[, seq(1,40,2)], 2, mean)`)
   * Are there any alternative methods the class can think of?
 
-
 #### Plotting
 
-* Go over base `plot()` function with `avg_day_inflammation` 
-* Go over plotting only the `max()` day inflammation 
-* Go over plotting only the `min()` day inflammation (ask class how they would do this)
+* Go over base plot() function with avg_day_inflammation
+* Go over plotting only the max() day inflammation
+* Go over plotting only the min() day inflammation (ask class how they would do this)
 
-Questions
-* How would you plot the SD for the inflammation data for each day across all patients (`plot(apply(dat, 2, sd))`)
+	* Questions
+		* How would you plot the SD for the inflammation data for each day across all patients (plot(apply(dat, 2, sd)))
+
+* Using Factors
+	* `sample_data <- read.csv(file = 'data/sample.csv', stringsAsFactors = TRUE)`
+	* `str(sample_data)` then `summary(dat)`
+		* summary is a good way to spot errors look at sample_data$Gender column
+	* Introduce xy plot `plot(x = BloodPressure, y = Age, data = sample_data)`
+	* `table(sample_data$Gender)` then `barplot(table(sample_data$Gender))`
+		* need to change variables to lowercase
+	* `dat$Gender[sample_data$Gender == 'M'] <- 'm'` then `plot(x = sample_data$Gender, y = sample_data$BloodPressure)`
+		* why does plot still show 4 levels?
+	* `droplevels()` removes extra levels in a factor
+		* `sample_data$Gender <- droplevels(sample_data$Gender)`
+		* `plot(x = sample_data$Gender, y = sample_data$BloodPressure)
+	* adjusting levels can provide a potential shortcut
+		* `levels(sample_data$Gender)[2] <- 'f'` then `plot(x = sample_data$Gender, y = sample_data$BloodPressure)`
 
 
 ### Creating Functions
