@@ -114,7 +114,7 @@ Switch the order of the point and line layers from the previous example. What ha
 **Challenge 4a**
 Modify the color and size of the points on the point layer in the previous example.
 *Hint: do **not** use the aes function.*
-  * `ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) + geom_point(size=3, color="orange") + scale_x_log10() + 
+  * `ggplot(data = gap_data, aes(x = gdpPercap, y = lifeExp)) + geom_point(size=3, color="orange") + scale_x_log10() + 
  geom_smooth(method="lm", size=1.5)`
  
  * The colour is not important and need to remind class that in R and ggplot2 different ways to specify colour
@@ -124,13 +124,68 @@ Modify the color and size of the points on the point layer in the previous examp
 **Challenge 4b**
 Modify your solution to Challenge 4a so that the points are now a different shape and are colored by continent with new trendlines. *Hint: The color argument **can be used** inside the aesthetic.*
     
-* `ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp, color = continent)) + geom_point(size=3, pch=17) + scale_x_log10() + geom_smooth(method="lm", size=1.5)`
+* `ggplot(data = gap_data, aes(x = gdpPercap, y = lifeExp, color = continent)) + geom_point(size=3, pch=17) + scale_x_log10() + geom_smooth(method="lm", size=1.5)`
 
   * Need to go over the `pch` (plotting character) argument and that it can control shapes
   
   ![graph2](http://www.statmethods.net/advgraphs/images/points.png)
 
-  
+
+**Multi-panel figures**
+
+* We can split our life expectancy by country as either one plot or as multiple ones
+* This is done by adding a facet panel
+* This example will specifically focus on countries that start with the letter "A" or "Z"
+
+* Here we are going to introduce the `substr` function 
+* This will pull out a character string (go over a string if we haven't talked about it already)
+   * It will look at characters that occur within the given start and stop position
+      * so a `start = 1` and a `stop =1` would limit everything to only the first character in the string
+      * the special operator `%in%` allows us to make multiple comparisons instead of doing long subsetting conditions
+        * e.g. `starts.with %in% c("A", "Z")` versus `starts.with == "A" | starts.with == "Z"`
+
+* This is a multi step problem
+  * First we need to pull out the first character from every country
+       * `starts.with <- substr(gap_data$country, start = 1, stop = 1)`
+  * Second we then need to subset the gapminder data based on this information
+       * `az.countries <- gap_data[starts.with %in% c("A", "Z"), ]`
+  * Third we then can graph the subsetted data and seperate it out by country
+       * `ggplot(data = az.countries, aes(x = year, y = lifeExp, color=continent)) + geom_line() + facet_wrap( ~ country)`
+
+* `facet_wrap` takes a “formula” as its argument (~) 
+   * This tells R to draw a panel for each unique value in the country column of the gapminder dataset
+   
+** Modifyiing Text**
+
+* We can make modifications to the text to make the figure more publication ready
+  * Some changes we are going to make include
+      * remove clutter of x-axis
+      * change the y-axis title
+      * Capitilize the legend title
+      
+   * To make these changes we are going to use `theme`, `scale`, and `lab` arguments
+
+   * `ggplot(data = az.countries, aes(x = year, y = lifeExp, color=continent)) +
+  geom_line() + facet_wrap( ~ country) +
+  xlab("Year") + ylab("Life expectancy") + ggtitle("Figure 1") +
+  scale_colour_discrete(name="Continent") +
+  theme(axis.text.x=element_blank(), axis.ticks.x=element_blank())`
+
+     * Need to walk through point by point exactly what `xlab`, `ylab`, `ggtitle`, `scale_colour_discrete`, and `theme` do
+         * need to specifically cover `axis.text.x`, `axis.ticks.x`, and what `elecment_blank()` does
+
+* Final Preamble from SWC
+This is a taste of what you can do with ggplot2. RStudio provides a really useful cheat sheet of the different layers available, and more extensive documentation is available on the ggplot2 website. Finally, if you have no idea how to change something, a quick Google search will usually send you to a relevant question and answer on Stack Overflow with reusable code to modify!
+
+**Challenge 5**
+Create a density plot of GDP per capita, filled by continent.
+*Advanced: - Transform the x axis to better visualise the data spread. - **Add a facet layer to panel the density plots by year.***
+
+   * `ggplot(data = gapminder, aes(x = gdpPercap, fill=continent)) + geom_density(alpha=0.6) + facet_wrap( ~ year) + scale_x_log10()`
+
+
+
+
 ### Split-Apply-Combine
 
 
