@@ -1,4 +1,4 @@
-# Intro to R Lesson Plan
+# Intro to R Lesson Plan Day 1
 **Originally designed for a SWC session from August 31st - September 1st**
 
 ### Preamble
