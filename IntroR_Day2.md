@@ -85,9 +85,52 @@ Scatterplot may not be the best way to visualize change over time
 Switch the order of the point and line layers from the previous example. What happened?
   * `ggplot(data = gap_data, aes(x=year, y=lifeExp, by=country)) + geom_point() + geom_line(aes(color=continent))`
 
+**Transformations and Statistics**
 
+ * Another nice thing about ggplot2 is that it makes it relatively easy to overaly statistical models
+ * first example
+   * `ggplot(data = gap_data, aes(x = gdpPercap, y = lifeExp, color=continent)) + geom_point()`
 
+ * Relatively hard to see the relationship due to outliers
+   * We can change the scale on the x axis using the `scale` function
+   * It is also possible to change the transparency of the points (which can be helpful when we have a lot of data)
+      * `ggplot(data = gap_data, aes(x = gdpPercap, y = lifeExp)) + geom_point(alpha = 0.5) + scale_x_log10()`
+          * So what happened here?
+              * the log 10 function applied a transformation to the gdpPercap values before displaying on the plot
+              * so each multiple of 10 now corresponds to an increase of 1 on the new scale
+                  * 10,000 is now 4 while 1,000 is now 3
+   
+* We can also now fit a simple relationship to the data by adding another layer `geom_smooth`
+   * `ggplot(data = gap_data, aes(x = gdpPercap, y = lifeExp)) + geom_point() + scale_x_log10() + geom_smooth(method="lm")`
 
+* We can make the line thicker by adding specifics to the `geom_smooth()` 
+  * `ggplot(data = gap_data, aes(x = gdpPercap, y = lifeExp)) + geom_point() + scale_x_log10() + geom_smooth(method="lm", size=1.5)`
+  * ask what would happen if we added the size argument to the `geom_point()` instead
+  * note that there are 2 ways an aesthetic can be specified 
+     * within `aes` as we have done previously
+     * as an argument passed to `geom_smooth`
+  
+
+**Challenge 4a**
+Modify the color and size of the points on the point layer in the previous example.
+*Hint: do **not** use the aes function.*
+  * `ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp)) + geom_point(size=3, color="orange") + scale_x_log10() + 
+ geom_smooth(method="lm", size=1.5)`
+ 
+ * The colour is not important and need to remind class that in R and ggplot2 different ways to specify colour
+    * can use actual names "blue", "green", etc. R and ggplot2 are smart enough to figure out what you mean
+    * can use specific colour codes e.g. "#FF0000FF"
+    
+**Challenge 4b**
+Modify your solution to Challenge 4a so that the points are now a different shape and are colored by continent with new trendlines. *Hint: The color argument **can be used** inside the aesthetic.*
+    
+* `ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp, color = continent)) + geom_point(size=3, pch=17) + scale_x_log10() + geom_smooth(method="lm", size=1.5)`
+
+  * Need to go over the `pch` (plotting character) argument and that it can control shapes
+  
+  ![graph2](http://www.statmethods.net/advgraphs/images/points.png)
+
+  
 ### Split-Apply-Combine
 
 
