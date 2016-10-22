@@ -27,12 +27,40 @@
       * data set, coordinate system, "geom"
    * `ggplot` function lets R know that we’re creating a new plot
       * all arguments are global options and are applied to every layer
-   
-   
-   
-   
-We’ve passed in two arguments to ggplot. First, we tell ggplot what data we want to show on our figure, in this example the gapminder data we read in earlier. For the second argument we passed in the aes function, which tells ggplot how variables in the data map to aesthetic properties of the figure, in this case the x and y locations. Here we told ggplot we want to plot the “gdpPercap” column of the gapminder data frame on the x-axis, and the “lifeExp” column on the y-axis. Notice that we didn’t need to explicitly pass aes these columns (e.g. x = gapminder[, "gdpPercap"]), this is because ggplot is smart enough to know to look in the data for that column!
+   * Two arguments have been passed
+     * what data we want
+     * aesthetic properties (x and y) 
+       * didn't need to call something like `x = gap_data[, "gdpPercap"])` smart enough to look for the data frame
+  * what happens if we only use the `ggplot` command without the corresponding `geom_point()` call?
+    * `ggplot(data = gapminder, aes(x = gdpPercap, y = lifeExp))`
+    * So this is interesting. Need to tell ggplot how to visualize the data 
+      * `geom_point()` in our case represents scatterplot of points
+  * plot `ggplot(data = gap_data, aes(x = gdpPercap, y = lifeExp)) + geom_point()` on more time to bring it all together
+  
+* Challenge 1
+
+Modify the previous example that we used so that the new plot shows how life expectancy has changed over time.
+ * modify `ggplot(data = gap_data, aes(x = gdpPercap, y = lifeExp)) + geom_point()`
+ * to `ggplot(data = gapminder, aes(x = year, y = lifeExp)) + geom_point()`
  
+* Challenge 2
+
+In the previous examples and challenge we’ve used the aes function to tell the scatterplot geom about the x and y locations of each point. Another aesthetic property we can modify is the point color. Modify the code from the previous challenge to color the points by the “continent” column. 
+
+ * First, see if the learners can attempt on their own
+ * Second, if they have troubles provide hint
+    * `ggplot(data = gapminder, aes(x = year, y = lifeExp, color=_________)) + geom_point()`
+ 
+    
+What trends do you see in the data? Are they what you expected?
+
+
+
+
+      
+ 
+   
+
 
 
 
