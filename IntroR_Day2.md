@@ -37,29 +37,53 @@
       * `geom_point()` in our case represents scatterplot of points
   * plot `ggplot(data = gap_data, aes(x = gdpPercap, y = lifeExp)) + geom_point()` on more time to bring it all together
   
-* Challenge 1
+**Challenge 1**
 
 Modify the previous example that we used so that the new plot shows how life expectancy has changed over time.
  * modify `ggplot(data = gap_data, aes(x = gdpPercap, y = lifeExp)) + geom_point()`
- * to `ggplot(data = gapminder, aes(x = year, y = lifeExp)) + geom_point()`
+ * to `ggplot(data = gap_data, aes(x = year, y = lifeExp)) + geom_point()`
  
-* Challenge 2
+**Challenge 2**
 
 In the previous examples and challenge we’ve used the aes function to tell the scatterplot geom about the x and y locations of each point. Another aesthetic property we can modify is the point color. Modify the code from the previous challenge to color the points by the “continent” column. 
 
  * First, see if the learners can attempt on their own
  * Second, if they have troubles provide hint
-    * `ggplot(data = gapminder, aes(x = year, y = lifeExp, color=_________)) + geom_point()`
+    * `ggplot(data = gap_data, aes(x = year, y = lifeExp, color=_________)) + geom_point()`
  
     
 What trends do you see in the data? Are they what you expected?
 
+**Layers**
 
+Scatterplot may not be the best way to visualize change over time
+ * Let's try a line plot instead
+   * `ggplot(data = gap_data, aes(x=year, y=lifeExp, by=country, color=continent)) + geom_line()`
 
+ * Notice how we have changed the `geom_point` to a `geom_line` 
+   * tells ggplot to draw a line for each country instead of a point
 
-      
- 
+ * What would we do if we wanted to have both lines and points on the plot?
+   * Ask class for response before showing the code
+   * `ggplot(data = gap_data, aes(x=year, y=lifeExp, by=country, color=continent)) + geom_line() + geom_point()`
+
+![graph](http://swcarpentry.github.io/r-novice-gapminder/fig/rmd-08-lifeExp-line-point-1.png)
+
+ * go back to how each layer (lines and points) are drawn on top of the previous layer
+    * in this example points on top of lines
+    * can highlight this with 
+       * `ggplot(data = gap_data, aes(x=year, y=lifeExp, by=country)) + geom_line(aes(color=continent)) + geom_point()`
+       
+![graph2](http://swcarpentry.github.io/r-novice-gapminder/fig/rmd-08-lifeExp-layer-example-1-1.png)
    
+ * on top of highlighting how layers are done the above code also highlights another important point
+    * color has been moved from global plot options so that it is now only applied to lines
+    * since the plain `geom_point()` draws from global we no longer have colour defined and defaults to black
+    
+ 
+**Challenge 3**
+Switch the order of the point and line layers from the previous example. What happened?
+  * `ggplot(data = gap_data, aes(x=year, y=lifeExp, by=country)) + geom_point() + geom_line(aes(color=continent))`
 
 
 
