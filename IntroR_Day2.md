@@ -181,16 +181,230 @@ This is a taste of what you can do with ggplot2. RStudio provides a really usefu
 Create a density plot of GDP per capita, filled by continent.
 *Advanced: - Transform the x axis to better visualise the data spread. - **Add a facet layer to panel the density plots by year.***
 
-   * `ggplot(data = gapminder, aes(x = gdpPercap, fill=continent)) + geom_density(alpha=0.6) + facet_wrap( ~ year) + scale_x_log10()`
+   * `ggplot(data = gap_data, aes(x = gdpPercap, fill=continent)) + geom_density(alpha=0.6) + facet_wrap( ~ year) + scale_x_log10()`
 
 
 
 
 ### Split-Apply-Combine
 
+* Go over an example function that multiplies the population and GDP per capita column
+
+`# Takes a dataset and multiplies the population column
+# with the GDP per capita column.
+calcGDP <- function(dat, year=NULL, country=NULL) {
+  if(!is.null(year)) {
+    dat <- dat[dat$year %in% year, ]
+  }
+  if (!is.null(country)) {
+    dat <- dat[dat$country %in% country,]
+  }
+  gdp <- dat$pop * dat$gdpPercap
+
+  new <- cbind(dat, gdp=gdp)
+  return(new)
+}`
+
+* A common problem you will run into is that you'll want to run calculations on different groups within the data
+* This function can be applied to all the data but what if we want mean GDP per continent?
+
+* One possible solution is to take the mean of each continent (this is really efficient though)
+
+  * `withGDP <- calcGDP(gapminder) 
+  mean(withGDP[withGDP$continent == "Africa", "gdp"])`
+
+  * `mean(withGDP[withGDP$continent == "Americas", "gdp"])`
+  * `mean(withGDP[withGDP$continent == "Asia", "gdp"])`
+  
+  * We always want to try and reduce the amount of repetition 
+     * Saves time
+     * Can avoid bugs (e.g. typos, etc.)
+  * Could right a new function, but this can take time
+  * The problem that we are grappling with is what this lesson is called
+     * "split-apply-combine"
+     
+ ![split_apply_graph](http://swcarpentry.github.io/r-novice-gapminder/fig/splitapply.png)
+ 
+ * We want to split our data into groups, in this case continents, apply some calculations on that group, then optionally combine the results together afterwards
+ 
+    * Need to bring up that we have seen some of this when we covered the `apply` function
+    
+**The plyr package**
+
+* One way of solving this problem is with the base function `apply` introduced earlier.
+
+* Another way of solving this problem is with the `plyr` package
+   * In general these functions are more user friendly but the choice on which to use is ultimately up to you.
+   
+   * `library(plyr)`
+   * Can operate on lists, data frames, and arrays.  Each of these performs
+      * A splitting operation
+      * Apply a function on each split in turn
+      * Recombine output data as a single data object
+   * Function names are based on the data structure expected as input and the data structure returned as output
+      * [a]rray, [l]ist, [d]ata.frame
+          * the first letter corresponds to the input data structure
+          * the second letter to the output data structure
+          * rest of function is named "ply"
+          
+      * In total 9 core function for \*\*ply
+      * There are an additional three functions which will only perform the split and apply steps, and not any combine step
+         * They’re named by their input data type and represent null output by a _ (see table)
+      * An array in ply can include a vector or matrix
+      
+ ![table_ply](http://swcarpentry.github.io/r-novice-gapminder/fig/full_apply_suite.png)
+ 
+ 
+ * Each of the `ply` functions (`daply`, `ddply`, `llply`, `laply`) have the same structure and has 4 key features and structures
+     * `xxply(.data, .variables, .fun)`
+        * The first letter of the function name give the input type and the second gives the output type
+        * `.data` gives the data object to be processed
+        * `.variable` identifies the splitting variables
+        * `.fun` gives the function to be called on each piece
+        
+ * This allows us to quickly calculate the mean GDP per continent
+    * `ddply(
+    .data = calcGDP(gap_data), 
+    .variables = "continent", 
+    .fun = function(x) mean(x$gdp))`
+          
+    * If we take a look at the previous code and walk through line by line
+        * The ddply function feeds in a data.frame (function starts with d) and returns another data.frame (2nd letter is a d)
+        * the first argument we gave was the data.frame we wanted to operate on: in this case the gapminder data 
+             * We called calcGDP on it first so that it would have the additional gdp column added to it
+        * The second argument indicated our split criteria: in this case the “continent” column. 
+             * Note that we gave the name of the column, not the values of the column like we had done previously with subsetting. 
+             * Plyr takes care of these implementation details for you
+        * The third argument is the function we want to apply to each grouping of the data. 
+             * We had to define our own short function here: each subset of the data gets stored in x, 
+                  * the first argument of our function. 
+                  * This is an anonymous function: 
+                      * we haven’t defined it elsewhere, and it has no name. It only exists in the scope of our call to ddply
+                      
+* We can also change the output structure (e.g. a list)
+
+  * `dlply(
+ .data = calcGDP(gapminder),
+ .variables = "continent",
+ .fun = function(x) mean(x$gdp))`
+ 
+ 
+ * plyr is also able to group by multiple columns (this is pretty cool!)
+ 
+   * `ddply(
+ .data = calcGDP(gapminder),
+ .variables = c("continent", "year"),
+ .fun = function(x) mean(x$gdp))`
+             
+* Like the previous example we can also change the output (input data.frame and output and array)
+
+  * `daply(
+ .data = calcGDP(gapminder),
+ .variables = c("continent", "year"),
+ .fun = function(x) mean(x$gdp))`
+ 
+* One final cool thing is that these functions can take the place of `for` loops. Why do this?
+   * They are faster than `for` loops
+   * To make the replacement simply put the code that was in the body of the for loop inside an anonymous function
+   
+      * `d_ply(
+  .data=gapminder,
+  .variables = "continent",
+  .fun = function(x) {
+    meanGDPperCap <- mean(x$gdpPercap)
+    print(paste(
+      "The mean GDP per capita for", unique(x$continent),
+      "is", format(meanGDPperCap, big.mark=",")))
+    }
+      )`
+ 
+      * Need to go over each part of this code step by step and break it down for the learners so that they understand it
+      * Mention the `format` function as a good way of making numeric values look "pretty"
+
+
+**Warm Up Challenge**
+Without running them, which of the following will calculate the average life expectancy per continent:
+
+1)
+`ddply(
+  .data = gapminder,
+  .variables = gapminder$continent,
+  .fun = function(dataGroup) {
+     mean(dataGroup$lifeExp)
+  }
+)`
+
+2)
+`ddply(
+  .data = gapminder,
+  .variables = "continent",
+  .fun = mean(dataGroup$lifeExp)
+)`
+
+3)
+`ddply(
+  .data = gapminder,
+  .variables = "continent",
+  .fun = function(dataGroup) {
+     mean(dataGroup$lifeExp)
+  }
+)`
+
+4)
+`adply(
+  .data = gapminder,
+  .variables = "continent",
+  .fun = function(dataGroup) {
+     mean(dataGroup$lifeExp)
+  }
+)`
+
+
+**Challenge 1**
+Calculate the average life expectancy per continent. Which has the longest? Which had the shortest?
+`data <- gapminder
+ddply(
+ .data = data, 
+ .variables = "continent", 
+ .fun = function(x) mean(x$lifeExp))`
+
+**Challenge 2**
+Calculate the average life expectancy per continent and year. Which had the longest and shortest in 2007? Which had the greatest change in between 1952 and 2007?
+
+`test <- ddply(
+ .data = data, 
+ .variables = c("continent", "year"), 
+ .fun = function(x) mean(x$lifeExp)
+)`
+
+* Answer longest and shortest
+  * `test[test$year == 2007, ]`
+
+* Answer greatest change (Need to see how class handles this one and let them know it is okay not to use `plyr` to answer)
+
+1) 
+`cbind(levels(test$continent), test$V1[test$year == 2007] - test$V1[test$year == 1952])`
+
+2)
+`ddply(
+  .data = test, 
+  .variables = c("continent"), 
+  .fun = function(x) x$V1[x$year == 2007] - x$V1[x$year == 1952]
+)`
+ 
+
+**Advanced Challenge**
+Calculate the difference in mean life expectancy between the years 1952 and 2007 from the output of challenge 2 using one of the plyr functions.
+
+`ddply(
+  .data = test, 
+  .variables = c("continent"), 
+  .fun = function(x) x$V1[x$year == 2007] - x$V1[x$year == 1952]
+)`
 
 
 
+ 
 ### Dataframe Manipulation with dplyr
 
 
