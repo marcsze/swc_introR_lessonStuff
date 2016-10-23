@@ -566,6 +566,62 @@ Is gapminder a purely long, purely wide, or some intermediate format?
   * The original gapminder data.frame is in an intermediate format. 
   * It is not purely long since it had multiple observation variables (pop,lifeExp,gdpPercap)
   
+* Comments from SWC
+
+`Sometimes, as with the gapminder dataset, we have multiple types of observed data. It is somewhere in between the purely ‘long’ and ‘wide’ data formats. We have 3 “ID variables” (continent, country, year) and 3 “Observation variables” (pop,lifeExp,gdpPercap). I usually prefer my data in this intermediate format in most cases despite not having ALL observations in 1 column given that all 3 observation variables have different units. There are few operations that would need us to stretch out this dataframe any longer (i.e. 4 ID variables and 1 Observation variable).`
+
+`While using many of the functions in R, which are often vector based, you usually do not want to do mathematical operations on values with different units. For example, using the purely long format, a single mean for all of the values of population, life expectancy, and GDP would not be meaningful since it would return the mean of values with 3 incompatible units. The solution is that we first manipulate the data either by grouping (see the lesson on dplyr), or we change the structure of the dataframe. Note: Some plotting functions in R actually work better in the wide format data.`
+
+**From wide to long format with gather()**
+
+* Data almost never is given to us like in the gapminder example
+
+* We are going to load a wide format version of the data
+   * This is an example of how data can sometimes be given to you
+   * `gap_wide <- read.csv("data/gap,inder_wide.csv", stringsAsFactors = FALSE)`
+   * `str(gap_wide)`
+     * Need to go over the argument `stringsAsFactors`
+     
+![visual_example_gap_wide](http://swcarpentry.github.io/r-novice-gapminder/fig/14-tidyr-fig2.png)     
+
+
+* First thing that we will do is convert this wide to a long format
+   * We will use the `tidyr` function `gather()`
+      * We want to 'gather' our observations variables into a single variable.
+   * `gap_long <- gap_wide %>% gather(obstype_year, obs_values, starts_with('pop'), 
+     starts_with('lifeExp'), starts_with('gdpPercap'))`
+   * `str(gap_long)`
+   
+* Here we have used piping syntax which is similar to what we were doing in the previous lesson with dplyr. 
+     * These are compatible and you can use a mix of tidyr and dplyr functions by piping them together
+
+* Let's breakdown the function
+  * We first name the new column for the new ID varialbe (obstype_year)
+  * We also name the new amagamated observation variable (obs_value)
+  * Then we provide the names of the old observation variables
+     * It is possible to type out the full observation variables 
+        * We can use `starts_with()` to select all varialbes that start with the desired character string
+        * `gather()` also allows alternative syntax of "-" symbol to identify which variables are not to be gathered
+              * `gap_long <- gap_wide %>% gather(obstype_year, obs_values, -continent, -country)`
+              * `str(gap_long)`
+              * this can be a huge time saver
+
+![visual_example_gap_long](http://swcarpentry.github.io/r-novice-gapminder/fig/14-tidyr-fig3.png)
+
+* obstype_year contains 2 pieces of information
+   * the observation type (pop, lifeExp, or gdpPercap) and the year
+   * We can use `separate()` to split the character strings into multiple variables
+   * `gap_long <- gap_long %>% separate(obstype_year,into=c('obs_type','year'),sep="_")`
+   * `gap_long$year <- as.integer(gap_long$year)`
+   
+**Challenge 2**
+Using gap_long, calculate the mean life expectancy, population, and gdpPercap for each continent. 
+*Hint: use the group_by() and summarize() functions we learned in the dplyr lesson*
+
+`gap_long %>% group_by(continent,obs_type) %>%
+   summarize(means=mean(obs_values))`
+   
+  * Probably will have to walk class through this example step by step (perhaps give a few minutes then work out together)
 
 
 
