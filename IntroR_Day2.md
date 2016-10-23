@@ -492,10 +492,39 @@ Calculate the average life expectancy per country. Which had the longest life ex
    group_by(country) %>%
    summarize(mean_lifeExp=mean(lifeExp))`
    
+* We can really add to this power
+  * Let's also group by both year and continent
+  * `gdp_bycontinents_byyear <- gap_data %>% group_by(continent,year) %>% summarize(mean_gdpPercap=mean(gdpPercap))`
 
+* And there is still more power offered
+   * We are not limited by only one new variable in `summarize()`
+   * `gdp_pop_bycontinents_byyear <- gap_data %>% group_by(continent,year) %>% summarize(mean_gdpPercap=mean(gdpPercap),
+        sd_gdpPercap=sd(gdpPercap),
+        mean_pop=mean(pop),
+        sd_pop=sd(pop))`
+
+**Using mutate()**
+
+* Another neat feature is we can create new variables with `mutate()` before or after summarizing information
+   * `gdp_pop_bycontinents_byyear <- gap_data %>% mutate(gdp_billion=gdpPercap*pop/10^9) %>%
+    group_by(continent,year) %>% summarize(mean_gdpPercap=mean(gdpPercap),
+       sd_gdpPercap=sd(gdpPercap),
+       mean_pop=mean(pop),
+       sd_pop=sd(pop),
+       mean_gdp_billion=mean(gdp_billion),
+       sd_gdp_billion=sd(gdp_billion))`
+
+**Advanced Challenge**
+Calculate the average life expectancy in 2002 of 2 randomly selected countries for each continent. Then arrange the continent names in reverse order. *Hint: Use the dplyr functions arrange() and sample_n(), they have similar syntax to other dplyr functions.*
+
+`lifeExp_2countries_bycontinents <- gapminder %>%
+   filter(year==2002) %>%
+   group_by(continent) %>%
+   sample_n(2) %>%
+   summarize(mean_lifeExp=mean(lifeExp)) %>%
+   arrange(desc(mean_lifeExp))`
    
-
-
+* Might have to do this question with the class and walk through it together
 
 
 ### Dataframe Manipulation with tidyr
