@@ -668,7 +668,16 @@ Take this 1 step further and create a gap_ludicrously_wide format data by spread
    spread(var_names,obs_values)`
 
   
-
+* One last thing
+   * `gap_wide_betterID <- separate(gap_wide_new,ID_var,c("continent","country"),sep="_")` **OR**
+   * `gap_wide_betterID <- gap_long %>% unite(ID_var, continent,country,sep="_") %>% unite(var_names, obs_type,year,sep="_") %>%
+    spread(var_names, obs_values) %>% separate(ID_var, c("continent","country"),sep="_")`
+   * `str(gap_wide_betterID)` and `all.equal(gap.wide, gap_wide_betterID)`
+   
+  
+   
+   
+    
 
    
 
