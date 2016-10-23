@@ -532,7 +532,6 @@ Calculate the average life expectancy in 2002 of 2 randomly selected countries f
 Need to get data for this section from the following source:
 
 `git remote add data https://github.com/resbaz/r-novice-gapminder-files  
-
 git pull data master`
 
 
