@@ -284,7 +284,7 @@ calcGDP <- function(dat, year=NULL, country=NULL) {
 * We can also change the output structure (e.g. a list)
 
   * `dlply(
- .data = calcGDP(gapminder),
+ .data = calcGDP(gap_data),
  .variables = "continent",
  .fun = function(x) mean(x$gdp))`
  
@@ -292,14 +292,14 @@ calcGDP <- function(dat, year=NULL, country=NULL) {
  * plyr is also able to group by multiple columns (this is pretty cool!)
  
    * `ddply(
- .data = calcGDP(gapminder),
+ .data = calcGDP(gap_data),
  .variables = c("continent", "year"),
  .fun = function(x) mean(x$gdp))`
              
 * Like the previous example we can also change the output (input data.frame and output and array)
 
   * `daply(
- .data = calcGDP(gapminder),
+ .data = calcGDP(gap_data),
  .variables = c("continent", "year"),
  .fun = function(x) mean(x$gdp))`
  
@@ -308,7 +308,7 @@ calcGDP <- function(dat, year=NULL, country=NULL) {
    * To make the replacement simply put the code that was in the body of the for loop inside an anonymous function
    
       * `d_ply(
-  .data=gapminder,
+  .data=gap_data,
   .variables = "continent",
   .fun = function(x) {
     meanGDPperCap <- mean(x$gdpPercap)
@@ -327,7 +327,7 @@ Without running them, which of the following will calculate the average life exp
 
 1)
 `ddply(
-  .data = gapminder,
+  .data = gap_data,
   .variables = gapminder$continent,
   .fun = function(dataGroup) {
      mean(dataGroup$lifeExp)
@@ -336,14 +336,14 @@ Without running them, which of the following will calculate the average life exp
 
 2)
 `ddply(
-  .data = gapminder,
+  .data = gap_data,
   .variables = "continent",
   .fun = mean(dataGroup$lifeExp)
 )`
 
 3)
 `ddply(
-  .data = gapminder,
+  .data = gap_data,
   .variables = "continent",
   .fun = function(dataGroup) {
      mean(dataGroup$lifeExp)
@@ -352,7 +352,7 @@ Without running them, which of the following will calculate the average life exp
 
 4)
 `adply(
-  .data = gapminder,
+  .data = gap_data,
   .variables = "continent",
   .fun = function(dataGroup) {
      mean(dataGroup$lifeExp)
@@ -362,9 +362,9 @@ Without running them, which of the following will calculate the average life exp
 
 **Challenge 1**
 Calculate the average life expectancy per continent. Which has the longest? Which had the shortest?
-`data <- gapminder
+`
 ddply(
- .data = data, 
+ .data = gap_data, 
  .variables = "continent", 
  .fun = function(x) mean(x$lifeExp))`
 
@@ -372,7 +372,7 @@ ddply(
 Calculate the average life expectancy per continent and year. Which had the longest and shortest in 2007? Which had the greatest change in between 1952 and 2007?
 
 `test <- ddply(
- .data = data, 
+ .data = gap_data, 
  .variables = c("continent", "year"), 
  .fun = function(x) mean(x$lifeExp)
 )`
@@ -403,9 +403,65 @@ Calculate the difference in mean life expectancy between the years 1952 and 2007
 )`
 
 
-
- 
 ### Dataframe Manipulation with dplyr
+
+We often select observations or variables, group data by certain criteria or even calculate summary statistics.  Similar to the case with plyr many functions can be performed using base R operations.
+
+`mean(gap_data[gap_data$continent == "Africa", "gdpPercap"])`
+
+`mean(gap_data[gap_data$continent == "Americas", "gdpPercap")`
+
+`mean(gap_data[gap_data$continent == "Asia", "gdpPercap"])`
+
+Similar to the last situation this isn't great because there is a lot of repetition.  It can cost you time now and later and produce unnecessary errors.
+
+**The dplyr package**
+
+* Fortunately the `dplyr` package provides some useful functions that are very good and manipulating dataframes.
+   * It does it in a way that limits repetition and reduces the probability of making errors
+   * It might also save you time on some typing and it might also be easier to understand
+
+* We are going to cover 6 of the more commonly used functions 
+   * `select()`
+   * `filter()`
+   * `group_by()`
+   * `summarize()`
+   * `mutate()`
+   
+* Load the package
+  * `library*dply)`
+  
+* If we only want to use a have a specific portion of our data frame we can use `select()`
+   * `year_country_gdp <- select(gap_data, year, country, gdpPercap)`
+      * Need to go over each component of the function after running
+      
+![select_overview](http://swcarpentry.github.io/r-novice-gapminder/fig/13-dplyr-fig1.png)
+
+* We can peek at year_country_gdp and see that it only contains the columns that we chose
+   * Although this is useful the true power of `dplyr` comes from being able to combine several functions using pipes
+   * `year_country_gdp <- gap_data %>% select(year, country, gdpPercap)`
+       * Walk through this step by step
+          * First we summon the gapminder dataframe and pass it on, using the pipe symbol `%>%`
+          * It is passed on to the next step, which is the select() function
+          * Don’t need to specify which data object we use in the select() function since in gets that from the previous pipe
+
+There is a good chance you have encountered pipes before in the shell. In R, a pipe symbol is %>% while in the shell it is | but the concept is the same!
+   * Probably also go over why it is `%>%` since `|` represents "or" in R
+   
+**Using filter()**
+
+* If we want the data frame from above but only European countries
+   * combine `select()` and `filter()`
+   * `year_country_gdp_euro <- gap_data %>% filter(continent=="Europe") %>% select(year,country,gdpPercap)`
+       * Should also walk class through step by step to make sure they understand the concept
+       
+**Challenge 1**
+Write a single command (which can span multiple lines and includes pipes) that will produce a dataframe that has the African values for lifeExp, country and year, but not for other Continents. How many rows does your dataframe have and why?
+
+`year_country_lifeExp_Africa <- gap_data %>% filter(continent=="Africa") %>% select(year,country,lifeExp)`
+
+   
+   
 
 
 
