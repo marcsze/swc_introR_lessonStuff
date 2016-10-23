@@ -534,4 +534,42 @@ Need to get data for this section from the following source:
 * `git remote add data https://github.com/resbaz/r-novice-gapminder-files`  
 * `git pull data master`
 
+* There are two main formats for data (wide and long)
+  * Long format can be thought of as
+      * each column is a variable
+      * each row is an observation
+      * should notice this is how ggplot2 like to have data inputed
+  * Wide format can be thought of as
+      * each row is a site/subject/patient
+      * have multiple observation variables containing the same type of data
+          * can be repeated observations over time 
+          * or multiple variables (or a mix of both)
+   * Although there is not right or wrong answer as to which to use
+      * we utilize ggplot2 and other functions are formated to work on the long format
+      
+* We will work on how to transform your data using tidyr functions regardless of format
+
+![example_wide_long](http://swcarpentry.github.io/r-novice-gapminder/fig/14-tidyr-fig1.png)
+
+* Often time the wide format is easier for us to read
+* In contrast the long format is easier for machines to read and aligns more closely with database designs
+   * Ask if anyone has experience working with databases.
+* ID variables are similar to fields in a database and observed variables are like database values
+
+** Getting started**
+
+* `library(c(dplyr, tidyr))`
+* Take a look at the gapminder data set `str(gap_data)`
+
+**Challenge 1**
+Is gapminder a purely long, purely wide, or some intermediate format?
+  * The original gapminder data.frame is in an intermediate format. 
+  * It is not purely long since it had multiple observation variables (pop,lifeExp,gdpPercap)
+  
+
+
+
+
+
+
 
