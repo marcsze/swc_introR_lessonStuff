@@ -623,6 +623,54 @@ Using gap_long, calculate the mean life expectancy, population, and gdpPercap fo
    
   * Probably will have to walk class through this example step by step (perhaps give a few minutes then work out together)
 
+**From long to intermediate format with spread()**
+
+* We can use the `spread()` function to "spread out" our data now back to either a wide or intermediate format
+   * `gap_normal <- gap_long %>% spread(obs_type, obs_values)`
+   * `dim(gap_normal)` versus `dim(gap_data)`
+   * `names(gap_normal)` versus `names(gap_data)`
+
+* So the gap_normal looks similar to the gap_data except that some variables look out of order
+   * `gap_normal <- gap_normal[, names(gap_data)]`
+   * `all.equal(gap_normal, gap_data)`
+
+* Something is going on here, what could it be?
+   * `head(gap_normal)` versus `head(gap_data)`
+       * the original was sorted by country, continent, and then year
+   * `gap_normal <- gap_normal %>% arrange(country, continent, year)`
+   * `all.equal(gap_normal, gap_data)`
+   
+* Let's now convert our long form back to the wide form
+   * We will keep country and continent as ID variables
+   * We will spread the observations across 3 metrics (pop, lifeExp, gdpPercap) and time (year)
+   * First need to create appropriate labels for new variables (time\*metric combos)
+   * Need to unify the ID variables to simplify the process of defining gap_wide
+
+* Let's get started
+   * `gap_temp <- gap_long %>% unite(var_ID, continent, country, sep="_")`
+   * `str(gap_temp)`
+
+* Getting Closer
+  * `gap_temp <- gap_long %>% unite(ID_var, continent, country, sep="_") %>% unite(var_names, obs_type, year, sep="_")`
+  * `str(gap_temp)`
+
+* Almost there
+  * `gap_wide_new <- gap_long %>% unite(ID_var, continent, country, sep="_") %>% unite(var_names, obs_type, year, sep="_") %>% 
+     spread(var_names, obs_values)`
+  * `str(gap_wide_new)`
+  
+**Challenge 3**
+Take this 1 step further and create a gap_ludicrously_wide format data by spreading over countries, year and the 3 metrics? 
+*Hint this new dataframe should only have 5 rows.*
+
+`gap_ludicrously_wide <- gap_long %>%
+   unite(var_names,obs_type,year,country,sep="_") %>%
+   spread(var_names,obs_values)`
+
+  
+
+
+   
 
 
 
