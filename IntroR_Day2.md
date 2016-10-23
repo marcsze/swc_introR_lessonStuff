@@ -460,8 +460,41 @@ Write a single command (which can span multiple lines and includes pipes) that w
 
 `year_country_lifeExp_Africa <- gap_data %>% filter(continent=="Africa") %>% select(year,country,lifeExp)`
 
+* Talk about how order of operations is important since if `select` was first there would be no continents to search
+
+
+**Using group_by() and summarize()**
+
+So how can we reduce the repetitiveness? What we have at the moment may be more understandable but if we wanted every continent we would have to still write out code for each one.
+  * `group_by()` can get around this by using every unique criteria available for `filter()`
+      * `str(gap_data)` make sure it is a factor
+      * `str(gap_data %>% group_by(continent))`
+          * Output is a `grouped_df` 
+          * A list where each iten in the list is a dataframe which contains only the rows that correspond to the particular value
+
+![group_by_visual](http://swcarpentry.github.io/r-novice-gapminder/fig/13-dplyr-fig2.png)
+
+
+** Using summarize()**
+
+* The true power of `group_by()` can be realized when grouped with `summarize()`
+   * Allow us to create new variable(s) by using functions that repeat for each of the continent-specific data frames
+   * using the group_by() function, we split our original dataframe into multiple pieces, 
+   * then we can run functions (e.g. `mean()` or `sd()`) within `summarize()`.
+   * `gdp_bycontinents <- gap_data %>% group_by(continent) %>% summarize(mean_gdpPercap=mean(gdpPercap))`
    
+![summarize_visual](http://swcarpentry.github.io/r-novice-gapminder/fig/13-dplyr-fig3.png)
+
+**Challenge 2**
+Calculate the average life expectancy per country. Which had the longest life expectancy and which had the shortest life expectancy?
+
+`lifeExp_bycountry <- gap_data %>%
+   group_by(country) %>%
+   summarize(mean_lifeExp=mean(lifeExp))`
    
+
+   
+
 
 
 
