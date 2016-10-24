@@ -187,6 +187,8 @@ animal <- c("m", "o", "n", "k", "e", "y")
   * Create new data from in which you halve the 1st five values in only those patients
   * print new data table to check
   * Mention in solution how R is vectorized so it will do the division for all values
+  * **Need to probably go over this question step by step with class**
+  	* Should probably use white board to draw out the problem
 
 *One possible solution*
 ```R
@@ -223,7 +225,7 @@ dat2[whichPatients, whichDays] <- dat2[whichPatients, whichDays]/2
 		* why does plot still show 4 levels?
 	* `droplevels()` removes extra levels in a factor
 		* `sample_data$Gender <- droplevels(sample_data$Gender)`
-		* `plot(x = sample_data$Gender, y = sample_data$BloodPressure)
+		* `plot(x = sample_data$Gender, y = sample_data$BloodPressure)`
 	* adjusting levels can provide a potential shortcut
 		* `levels(sample_data$Gender)[2] <- 'f'` then `plot(x = sample_data$Gender, y = sample_data$BloodPressure)`
 
@@ -241,7 +243,7 @@ fahr_to_kelvin <- function(temp){
 }
 ```
 * Demonstrate a few examples
-* Mention that R has an automatic reutrn but we will specify the return for our lesson for clarity
+* Mention that R has an automatic return but we will specify the return for our lesson for clarity
 * Try examples without the return
 
 #### Composing Functions
@@ -257,7 +259,12 @@ kelvin_to_celsius <- function(temp){
 ```
 * Try this new function on 0 should return -273.15 if it works properly.
 * Show how to create fahrenheit to celsius conversion using the two functions already made
+* **Walk through this example with the class as a fill in the blank**
+	* Want to highlight how we can nest one function into another
 
+* Ask classs to try to create a faherienheit to celsius function with what they have learned
+
+*Solution*
 ```R
 fahr_to_celsius <- function(temp){
   temp_k <- fahr_to_kelvin(temp)
@@ -273,16 +280,20 @@ Question
 * Create a wrapper function that puts a variable at the beginning and end of vector
     * we want a vector with `*` at the beginning and the end of an inputed vector
     * `vec1 <- c("write", "programs", "for", "people", "not", "computers")`
-    * `wrapperVar <- "*"`
+    * `Var_used <- "*"`
+* **Might want to draw this problem out on the white board for clarity**
+
 
 *Solution*
 ```R
-fence <- function(vec1, wrapperVar){
-  newVector <- c(wrapperVar, vec1, wrapperVar)
+fence <- function(vectorOfInterest, wrapperVar){
+  newVector <- c(wrapperVar, vectorOfInterest, wrapperVar)
   return(newVector)
 }
 ```
 * Create a fucntion that obtains the first and last component in a vector (hint `length()`)
+	* Mention `length()` to class
+
 
 *Solution*
 ```R
