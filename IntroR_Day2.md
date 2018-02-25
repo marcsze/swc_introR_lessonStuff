@@ -252,7 +252,7 @@ calcGDP <- function(dat, year=NULL, country=NULL) {
          * They’re named by their input data type and represent null output by a _ (see table)
       * An array in ply can include a vector or matrix
       
- ![table_ply](http://swcarpentry.github.io/r-novice-gapminder/fig/full_apply_suite.png)
+ ![table_ply](https://swcarpentry.github.io/r-novice-gapminder/fig/12-plyr-fig2.png)
  
  
  * Each of the `ply` functions (`daply`, `ddply`, `llply`, `laply`) have the same structure and has 4 key features and structures
