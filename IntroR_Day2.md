@@ -223,7 +223,7 @@ calcGDP <- function(dat, year=NULL, country=NULL) {
   * The problem that we are grappling with is what this lesson is called
      * "split-apply-combine"
      
- ![split_apply_graph](http://swcarpentry.github.io/r-novice-gapminder/fig/splitapply.png)
+ ![split_apply_graph](https://swcarpentry.github.io/r-novice-gapminder/fig/12-plyr-fig1.png)
  
  * We want to split our data into groups, in this case continents, apply some calculations on that group, then optionally combine the results together afterwards
  
