@@ -60,6 +60,7 @@ What trends do you see in the data? Are they what you expected?
 
 Scatterplot may not be the best way to visualize change over time
  * Let's try a line plot instead
+ * Mention that "by" and "group" do the same thing
    * `ggplot(data = gap_data, aes(x=year, y=lifeExp, by=country, color=continent)) + geom_line()`
 
  * Notice how we have changed the `geom_point` to a `geom_line` 
