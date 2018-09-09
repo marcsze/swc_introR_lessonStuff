@@ -4,6 +4,7 @@
 * First we need to install and load the necessary packages for the days lesson
   * Gapminder data set
     * `install.packages("gapminder")` then `library(gapminder)` then `gap_data <- gapminder`
+    * Need to go over the data table with the class and perhaps write down the columns that are contained within it
   * Install ggplot2, plyr, tidyr, and dplyr
     * `install.packages("tidyverse)`
  
