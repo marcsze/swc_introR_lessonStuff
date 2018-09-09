@@ -531,6 +531,7 @@ Calculate the average life expectancy in 2002 of 2 randomly selected countries f
    
 * Might have to do this question with the class and walk through it together
 
+**If there is time final challenge is to create a graph using the tidyverse %>% and + where needed**
 
 ### Dataframe Manipulation with tidyr
 
