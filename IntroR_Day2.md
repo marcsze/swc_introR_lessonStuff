@@ -240,6 +240,7 @@ calcGDP <- function(dat, year=NULL, country=NULL) {
    * In general these functions are more user friendly but the choice on which to use is ultimately up to you.
    
    * `library(plyr)`
+    * Skip if tidyverse package loaded in the beginning
    * Can operate on lists, data frames, and arrays.  Each of these performs
       * A splitting operation
       * Apply a function on each split in turn
