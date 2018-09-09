@@ -10,7 +10,9 @@
  
 ### Creating Publication-Quality Graphics
 
-* load our plotting package `library("ggplot2")`
+* load our plotting package `library("tidyverse")`
+* **Need to explain that ggplot2 is part of the tidyverse suite of packages**
+  * It contains ggplot2, dplyr, plyr, tidyr, etc.
 * ggplot2
   * very effective packge for creating publication quality graphics
   * built on Hadley Wickham's grammar of graphics
