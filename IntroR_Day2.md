@@ -432,7 +432,8 @@ Similar to the last situation this isn't great because there is a lot of repetit
    * `mutate()`
    
 * Load the package
-  * `library*dply)`
+  * `library(dplyr)`
+   * This can be skipped if the tidyverse package was loaded
   
 * If we only want to use a have a specific portion of our data frame we can use `select()`
    * `year_country_gdp <- select(gap_data, year, country, gdpPercap)`
