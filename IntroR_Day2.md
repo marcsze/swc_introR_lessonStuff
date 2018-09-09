@@ -50,8 +50,7 @@ Modify the previous example that we used so that the new plot shows how life exp
 
 In the previous examples and challenge we’ve used the aes function to tell the scatterplot geom about the x and y locations of each point. Another aesthetic property we can modify is the point color. Modify the code from the previous challenge to color the points by the “continent” column. 
 
- * First, see if the learners can attempt on their own
- * Second, if they have troubles provide hint
+* Question with hint. If having troubles walk through verbally to help
     * `ggplot(data = gap_data, aes(x = year, y = lifeExp, color=_________)) + geom_point()`
  
     
