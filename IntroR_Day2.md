@@ -5,7 +5,7 @@
   * Gapminder data set
     * `install.packages("gapminder")` then `library(gapminder)` then `gap_data <- gapminder`
   * Install ggplot2, plyr, tidyr, and dplyr
-    * `install.packages(c("ggplot2", "plyr", "tidyr", "dplyr"))`
+    * `install.packages("tidyverse)`
  
  
 ### Creating Publication-Quality Graphics
